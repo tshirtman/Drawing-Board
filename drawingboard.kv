@@ -1,0 +1,94 @@
+#:kivy 1.0
+#:import kivy kivy
+
+<DrawingBoard>:
+    board: board
+    button_move: button_move
+    canvas:
+        Color:
+            rgb: root.color
+
+        Point:
+            source: 'particle.png'
+            pointsize: root.point_size
+            points: (root.point_size, root.point_size)
+
+    Widget:
+        id: board
+        canvas.before:
+            PushMatrix:
+            Translate:
+                xy: root.pos_x, root.pos_y
+
+        canvas.after:
+            PopMatrix:
+
+
+    Button:
+        text: 'clear'
+        pos_hint: {'right': 1, 'top': 1}
+        size_hint: None, None
+        size: 50, 24
+        on_release: board.canvas.clear()
+
+    ToggleButton:
+        id: colors
+        text: 'colors'
+        pos_hint: {'center_x': .5, 'top': 1}
+        size_hint: None, None
+        size: 50, 24
+        #on_release: root.toggle_colors()
+
+    Button:
+        text: 'move'
+        pos_hint: {'x': 0, 'top': 1}
+        id: button_move
+        size_hint: None, None
+        size: 50, 24
+
+    BoxLayout:
+        top: (colors.state == 'down') and (self.height - 24) or 0
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'red'
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 1
+                value: root.color[0]
+                on_value: root.color[0] = args[1]
+
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'green'
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 1
+                value: root.color[1]
+                on_value: root.color[1] = args[1]
+
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'blue'
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 1
+                value: root.color[2]
+                on_value: root.color[2] = args[1]
+
+        BoxLayout:
+            orientation: 'vertical'
+            Label:
+                text: 'size'
+            Slider:
+                orientation: 'vertical'
+                min: 0
+                max: 10
+                value: root.point_size
+                on_value: root.point_size = args[1]
+
