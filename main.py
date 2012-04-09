@@ -79,8 +79,6 @@ class DrawingBoard(FloatLayout):
                 except GraphicException:
                     pass
 
-        self.canvas.ask_update()
-
     def on_touch_up(self, touch):
         if touch.grab_current is not self:
             return
